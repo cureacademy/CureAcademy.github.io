@@ -1,21 +1,22 @@
 services:
   frontend:
-    build: ./frontend
+    build: .  # Changed from ./frontend to . (the root)
     ports:
       - "5173:5173"
     volumes:
-      - ./frontend:/app
+      - .:/app  # Maps the root directory to /app in the container
       - node_modules_frontend:/app/node_modules
     depends_on:
       - backend
 
   backend:
-    build: ./backend
+    build: ./backend  # Keep this if your backend files are still in a folder named /backend
     ports:
       - "8000:8000"
     volumes:
       - ./backend:/app
     env_file:
       - ./backend/.env
+
 volumes:
   node_modules_frontend:

@@ -4,13 +4,9 @@ FROM node:20
 # Set working directory
 WORKDIR /app
 
-# Copy package.json and lock file first for caching
-COPY package.json package-lock.json ./
-
-# Install dependencies
+# Now that this file is in the root, it looks for package.json in the root
+COPY package*.json ./
 RUN npm install
-
-# Copy the rest of the frontend files
 COPY . .
 
 # Expose Vite's dev server port
