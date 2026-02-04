@@ -3,6 +3,7 @@ import { Microscope, Lightbulb, FlaskConical, Users, Mail, ArrowRight, Calendar,
 
 // Navigation Component
 function Navigation({ currentPage, setCurrentPage }) {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // Added state for mobile toggle
   const navItems = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About Us' },
@@ -14,15 +15,18 @@ function Navigation({ currentPage, setCurrentPage }) {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm px-6 py-4">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
+        {/* Brand/Logo */}
         <button onClick={() => setCurrentPage('home')} className="flex items-center gap-3">
-          <div className="bg-teal-700 p-2 rounded-lg text-white">
+          <div className="bg-teal-700 p-2 rounded-lg text-white shrink-0">
             <Microscope size={24} />
           </div>
           <div className="flex flex-col items-start text-left">
             <span className="font-bold text-xl text-teal-700 tracking-tighter leading-none uppercase">CURE ACADEMY</span>
-            <span className="text-[10px] text-gray-500 uppercase font-medium">Inspiring high school students to learn about cancer research</span>
+            <span className="hidden xs:block text-[10px] text-gray-500 uppercase font-medium mt-1">Inspiring students in cancer research</span>
           </div>
         </button>
+
+        {/* Desktop Navigation */}
         <div className="hidden md:flex gap-6">
           {navItems.map((item) => (
             <button
@@ -34,7 +38,33 @@ function Navigation({ currentPage, setCurrentPage }) {
             </button>
           ))}
         </div>
+
+        {/* Mobile Menu Toggle Button */}
+        <button 
+          className="md:hidden p-2 text-gray-600"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? <span className="text-2xl">✕</span> : <span className="text-2xl">☰</span>}
+        </button>
       </div>
+
+      {/* Mobile Navigation Dropdown */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-t mt-4 flex flex-col gap-4 pb-6 animate-in slide-in-from-top duration-300">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => {
+                setCurrentPage(item.id)
+                setMobileMenuOpen(false)
+              }}
+              className={`text-left text-lg font-medium px-4 py-2 ${currentPage === item.id ? 'text-teal-600 bg-teal-50' : 'text-gray-600'}`}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      )}
     </nav>
   )
 }
