@@ -147,7 +147,7 @@ function ProgramPage() {
     { date: "June 29-July 3, 2026", topic: "Tumor Microenvironment", details: "Cancer associated fibroblasts, neighborhood cells, immune infiltration, and metastatic process." },
     { date: "July 6-10, 2026", topic: "The Immune System in Cancer", details: "Understanding the role of the immune system in cancer." },
     { date: "July 13-17, 2026", topic: "The Role of the Host", details: "The patient as a whole." },
-    { date: "July 20-25, 2026", topic: "Environmental Impacts on Cancer", details: "Epidemiology and EPA efforts to reduce exposure to carcinogens." }
+    { date: "July 20-25, 2026", topic: "Environmental Impacts on Cancer", details: "Understanding environmental factor and its role in cancer." }
   ]
 
   return (
@@ -178,9 +178,6 @@ function ProgramPage() {
              <h4 className="font-bold text-gray-400 uppercase text-xs tracking-widest flex items-center gap-2">
               <Calendar size={14} /> Timeline 2026
             </h4>
-            <a href="https://www.epa.gov/environmental-topics/epa-efforts-reduce-exposure-carcinogens-and-prevent-cancer" target="_blank" className="text-teal-600 text-xs font-bold hover:underline flex items-center gap-1">
-              EPA Research <ExternalLink size={12} />
-            </a>
           </div>
           {timeline.map((item, i) => (
             <div key={i} className="flex flex-col md:flex-row md:gap-10 border-b border-gray-50 last:border-0 pb-6 last:pb-0 text-left">
