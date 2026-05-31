@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Microscope, Lightbulb, FlaskConical, Users, Mail, ArrowRight, Calendar, CheckCircle, MapPin, ExternalLink, Heart } from 'lucide-react'
 
-// Navigation Component
 function Navigation({ currentPage, setCurrentPage }) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false) // Added state for mobile toggle
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false) 
   const navItems = [
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About Us' },
-    { id: 'program', label: 'Program' },
+    { id: 'program', label: 'Our Program' },
+    { id: 'opportunities', label: 'Other Opportunities' },
     { id: 'apply', label: 'Apply' },
     { id: 'support', label: 'Support Us' },
   ]
@@ -17,11 +17,11 @@ function Navigation({ currentPage, setCurrentPage }) {
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         {/* Brand/Logo */}
         <button onClick={() => setCurrentPage('home')} className="flex items-center gap-3">
-          <div className="bg-teal-700 p-2 rounded-lg text-white shrink-0">
+          <div className="p-2 rounded-lg text-white shrink-0" style={{backgroundColor: '#86bedd'}}>
             <Microscope size={24} />
           </div>
           <div className="flex flex-col items-start text-left">
-            <span className="font-bold text-xl text-teal-700 tracking-tighter leading-none uppercase">CURE ACADEMY</span>
+            <span className="font-bold text-xl tracking-tighter leading-none uppercase" style={{color: '#86bedd'}}>CURE ACADEMY</span>
             <span className="hidden xs:block text-[10px] text-gray-500 uppercase font-medium mt-1">Inspiring students in cancer research</span>
           </div>
         </button>
@@ -69,13 +69,12 @@ function Navigation({ currentPage, setCurrentPage }) {
   )
 }
 
-// Home Page
 function HomePage({ setCurrentPage }) {
   return (
     <div className="pt-24 min-h-screen">
       <section className="px-6 py-20 text-center max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
-          Empowering the next generation of cancer researchers
+          Empowering the next generation of cancer scientists and physicians
         </h1>
         <div className="flex justify-center gap-12 mb-12">
           <div className="text-center">
@@ -102,19 +101,19 @@ function HomePage({ setCurrentPage }) {
               <div className="bg-amber-100 w-16 h-16 rounded-2xl flex items-center justify-center text-amber-600 mx-auto mb-6">
                 <Lightbulb size={32} />
               </div>
-              <p className="font-bold text-gray-800 leading-snug">Learn about cancer biology from expert professors</p>
+              <p className="font-bold text-gray-800 leading-snug">Learn about cancer from experts in the field</p>
             </div>
             <div className="p-10 bg-white rounded-3xl shadow-sm">
               <div className="bg-teal-100 w-16 h-16 rounded-2xl flex items-center justify-center text-teal-600 mx-auto mb-6">
                 <FlaskConical size={32} />
               </div>
-              <p className="font-bold text-gray-800 leading-snug">Gain hands-on lab experience</p>
+              <p className="font-bold text-gray-800 leading-snug">Gain hands-on paid lab experience</p>
             </div>
             <div className="p-10 bg-white rounded-3xl shadow-sm">
               <div className="bg-blue-100 w-16 h-16 rounded-2xl flex items-center justify-center text-blue-600 mx-auto mb-6">
                 <Users size={32} />
               </div>
-              <p className="font-bold text-gray-800 leading-snug">Connect with like-minded students</p>
+              <p className="font-bold text-gray-800 leading-snug">Receive mentorship and support</p>
             </div>
           </div>
         </div>
@@ -123,24 +122,51 @@ function HomePage({ setCurrentPage }) {
   )
 }
 
-// About Page
 function AboutPage() {
   return (
     <div className="pt-32 px-6 max-w-4xl mx-auto pb-20 text-left">
-      <h2 className="text-3xl font-bold mb-6 text-teal-700">About Us</h2>
-      <p className="text-2xl font-bold text-gray-800 mb-6 leading-tight">
-        Our Mission: Nurture the next generation of cancer researchers and physicians
+      <h2 className="text-3xl font-bold mb-4">About Us</h2>
+      <p className="text-2xl font-bold text-gray-800 mb-8 leading-tight">
+        Our Mission: Empowering the next generation of cancer scientists and physicians
       </p>
-      <div className="bg-teal-50 p-8 rounded-2xl border-l-4 border-teal-500 shadow-sm">
-        <p className="text-gray-700 leading-relaxed text-lg">
-          In collaboration with NY Bioforce, Cure Academy connects selected students to hands-on, paid biomedical research experiences.
-        </p>
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="bg-teal-50 p-8 rounded-2xl border-l-4 border-teal-500 shadow-sm">
+          <h3 className="font-bold text-teal-800 text-sm uppercase tracking-widest mb-3">Our Mission</h3>
+          <p className="text-gray-700 leading-relaxed">
+            Cure Academy is a cancer education and mentorship program designed to introduce high school students to the field of cancer. Through lectures led by researchers, physicians, and healthcare professionals, students gain a foundational understanding of cancer.
+          </p>
+        </div>
+        <div className="bg-teal-50 p-8 rounded-2xl border-l-4 border-teal-500 shadow-sm">
+          <h3 className="font-bold text-teal-800 text-sm uppercase tracking-widest mb-3">Research Opportunities</h3>
+          <p className="text-gray-700 leading-relaxed">
+            In collaboration with NY Bioforce, selected students will be matched with hands-on, paid biomedical research opportunities. These experiences allow students to apply what they have learned, develop laboratory skills, and work alongside researchers on real-world scientific projects.
+          </p>
+        </div>
+        <div className="bg-teal-50 p-8 rounded-2xl border-l-4 border-teal-500 shadow-sm">
+          <h3 className="font-bold text-teal-800 text-sm uppercase tracking-widest mb-3">Mentorship & Support</h3>
+          <p className="text-gray-700 leading-relaxed">
+            Beyond education and research, Cure Academy provides mentorship and guidance to help students navigate opportunities in science, medicine, and higher education. We share cancer-related opportunities, research programs, internships, events, and educational resources through our website, listserv, and Instagram community.
+          </p>
+        </div>
+        <div className="bg-teal-50 p-8 rounded-2xl border-l-4 border-teal-500 shadow-sm">
+          <h3 className="font-bold text-teal-800 text-sm uppercase tracking-widest mb-3">Stay Connected</h3>
+          <p className="text-gray-700 leading-relaxed mb-3">
+            Join our community to stay informed about cancer research opportunities, events, and resources.
+          </p>
+          <p className="text-gray-700">
+            <strong>Join our listserv:</strong>{' '}
+            <a href="#" onClick={(e) => { e.preventDefault(); document.getElementById('apply-listserv')?.scrollIntoView(); }} className="text-teal-600 underline">Sign up here</a>
+          </p>
+          <p className="text-gray-700 mt-2">
+            <strong>Follow us on Instagram:</strong>{' '}
+            <a href="https://instagram.com/cureacademy" target="_blank" className="text-teal-600 underline">@cureacademy</a>
+          </p>
+        </div>
       </div>
     </div>
   )
 }
 
-// Program Page
 function ProgramPage() {
   const timeline = [
     { date: "June 22-26, 2026", topic: "Cancer Cell", details: "Process of transformation, DNA damage, mutations, oncogenes, tumor suppressors, and genomic instability." },
@@ -219,7 +245,69 @@ function ProgramPage() {
   )
 }
 
-// Apply Page
+function SubscribeForm() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState(null) // null | 'loading' | 'success' | 'error'
+  const [message, setMessage] = useState('')
+
+  const handleSubscribe = async () => {
+    if (!email || !email.includes('@')) {
+      setStatus('error')
+      setMessage('Please enter a valid email address.')
+      return
+    }
+    setStatus('loading')
+    try {
+      const res = await fetch('http://localhost:8000/listserv/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setStatus('success')
+        setMessage('You\'re subscribed! Welcome to the Cure Academy listserv.')
+        setEmail('')
+      } else {
+        setStatus('error')
+        setMessage(data.detail || 'Something went wrong. Please try again.')
+      }
+    } catch {
+      setStatus('error')
+      setMessage('Could not reach the server. Please try again later.')
+    }
+  }
+
+  return (
+    <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100">
+      <h3 className="text-xl font-bold mb-6 text-gray-800 text-center">Stay up to date</h3>
+      <div className="flex flex-col gap-4">
+        <input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
+          disabled={status === 'loading' || status === 'success'}
+          className="p-4 rounded-2xl border-2 border-gray-200 focus:border-teal-400 outline-none text-center"
+        />
+        <button
+          onClick={handleSubscribe}
+          disabled={status === 'loading' || status === 'success'}
+          className="bg-[#F4A574] text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:brightness-105 transition-all disabled:opacity-60"
+        >
+          {status === 'loading' ? 'Subscribing...' : status === 'success' ? '✓ Subscribed' : 'Subscribe'}
+        </button>
+        {message && (
+          <p className={`text-sm text-center font-medium ${status === 'success' ? 'text-teal-600' : 'text-red-500'}`}>
+            {message}
+          </p>
+        )}
+      </div>
+    </div>
+  )
+}
+
 function ApplyPage() {
   return (
     <div className="pt-32 px-6 max-w-3xl mx-auto text-center pb-24">
@@ -236,19 +324,12 @@ function ApplyPage() {
           OPEN REGISTRATION FORM <ExternalLink />
         </a>
 
-        <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100">
-          <h3 className="text-xl font-bold mb-6 text-gray-800 flex items-center justify-center gap-2 text-center">Stay up to date</h3>
-          <div className="flex flex-col gap-4">
-            <input type="email" placeholder="Enter your email" className="p-4 rounded-2xl border-2 border-gray-200 focus:border-teal-400 outline-none text-center" />
-            <button className="bg-[#F4A574] text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:brightness-105 transition-all">Subscribe</button>
-          </div>
-        </div>
+        <SubscribeForm />
       </div>
     </div>
   )
 }
 
-// Support Page
 function SupportPage() {
   return (
     <div className="pt-32 px-6 max-w-4xl mx-auto text-center pb-24">
@@ -269,7 +350,42 @@ function SupportPage() {
   )
 }
 
-// Global Footer
+function OpportunitiesPage() {
+  const opportunities = [
+    // Add entries here as: { title, org, description, link, tag }
+    // Example:
+    // { title: "Summer Research Program", org: "Memorial Sloan Kettering", description: "8-week paid cancer research internship for rising seniors.", link: "https://mskcc.org", tag: "Internship" },
+  ]
+
+  return (
+    <div className="pt-32 px-6 max-w-4xl mx-auto pb-20">
+      <h2 className="text-3xl font-bold mb-3 text-gray-900">Other Opportunities</h2>
+      <p className="text-gray-500 mb-10 text-lg">Cancer-related programs, internships, and events for high school students.</p>
+
+      {opportunities.length === 0 ? (
+        <div className="text-center py-20 text-gray-400">
+          <p className="text-lg font-medium">Opportunities coming soon.</p>
+          <p className="text-sm mt-2">Check back for cancer research programs, internships, and events.</p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {opportunities.map((opp, i) => (
+            <a key={i} href={opp.link} target="_blank"
+              className="flex justify-between items-start p-6 border-2 border-gray-100 rounded-2xl hover:border-teal-200 hover:bg-teal-50 transition-all block">
+              <div>
+                <p className="font-bold text-gray-900 text-lg">{opp.title}</p>
+                <p className="text-teal-600 font-medium text-sm mb-2">{opp.org}</p>
+                <p className="text-gray-500 text-sm">{opp.description}</p>
+              </div>
+              <span className="ml-6 shrink-0 text-xs font-bold px-3 py-1 bg-teal-100 text-teal-700 rounded-full">{opp.tag}</span>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 function Footer() {
   return (
     <footer className="bg-gray-50 border-t py-20 px-6 mt-20">
@@ -300,6 +416,7 @@ export default function App() {
       case 'program': return <ProgramPage />
       case 'apply': return <ApplyPage />
       case 'support': return <SupportPage />
+      case 'opportunities': return <OpportunitiesPage />
       default: return <HomePage setCurrentPage={setCurrentPage} />
     }
   }
