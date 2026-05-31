@@ -247,7 +247,7 @@ function ProgramPage() {
 
 function SubscribeForm() {
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState(null) // null | 'loading' | 'success' | 'error'
+  const [status, setStatus] = useState(null)
   const [message, setMessage] = useState('')
 
   const handleSubscribe = async () => {
@@ -258,7 +258,7 @@ function SubscribeForm() {
     }
     setStatus('loading')
     try {
-      const res = await fetch('http://localhost:8000/listserv/subscribe', {
+      const res = await fetch('http://cureacademy.github.io/listserv/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
