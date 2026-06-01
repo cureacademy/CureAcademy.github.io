@@ -27,7 +27,6 @@ function Navigation({ currentPage, setCurrentPage }) {
           </div>
         </button>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex gap-6">
           {navItems.map((item) => (
             <button
