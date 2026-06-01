@@ -44,7 +44,7 @@ function Navigation({ currentPage, setCurrentPage }) {
           className="md:hidden p-2 text-gray-600"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <span className="text-2xl">✕</span> : <span className="text-2xl">☰</span>}
+          {mobileMenuOpen ? <span className="text-2xl">â</span> : <span className="text-2xl">â°</span>}
         </button>
       </div>
 
@@ -301,7 +301,7 @@ function SubscribeForm() {
           disabled={status === 'loading' || status === 'success'}
           className="bg-[#F4A574] text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:brightness-105 transition-all disabled:opacity-60"
         >
-          {status === 'loading' ? 'Subscribing...' : status === 'success' ? '✓ Subscribed' : 'Subscribe'}
+          {status === 'loading' ? 'Subscribing...' : status === 'success' ? 'â Subscribed' : 'Subscribe'}
         </button>
         {message && (
           <p className={`text-sm text-center font-medium ${status === 'success' ? 'text-teal-600' : 'text-red-500'}`}>
@@ -403,7 +403,7 @@ function Footer() {
           </a>
         </div>
         <div className="text-gray-400 text-sm font-medium">
-          <p>© 2026 Cure Academy. All rights reserved.</p>
+          <p>Â© 2026 Cure Academy. All rights reserved.</p>
         </div>
       </div>
     </footer>
