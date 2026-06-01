@@ -129,6 +129,8 @@ const FIELD_GROUPS = [
       },
       { id: "apply_sub", label: "Tagline", regex: /(Register for the lecture series)/ },
       { id: "apply_btn", label: "Button text", regex: /(OPEN REGISTRATION FORM)/ },
+      { id: "apply_form_link", label: "Registration form URL", regex: /(https:\/\/docs\.google\.com\/forms\/d\/1JlUqATRrP_X65XRmuz0Py2xUjfjQ9U3RTeVGXEoEFlQ\/viewform\?edit_requested=true)/ },
+      { id: "apply_listserv_link", label: "Listserv form URL", regex: /(https:\/\/forms\.gle\/4ZDZFWYY6h4QRe226)/ },
     ],
   },
 
@@ -144,6 +146,7 @@ const FIELD_GROUPS = [
           /(If you are interested in volunteering as a guest instructor or student mentor at Cure Academy, please complete the form below\.)/,
       },
       { id: "support_btn", label: "Button text", regex: /(Support Cure Academy)/ },
+      { id: "support_link", label: "Support form URL", regex: /(https:\/\/docs\.google\.com\/forms\/d\/1UomkXZYqi5W4uZjUbbdXOpNF5R2RKDTbnFratq1BpxQ\/)/ },
     ],
   },
 
@@ -154,6 +157,16 @@ const FIELD_GROUPS = [
       { id: "nav_tag", label: "Nav tagline", regex: /(Inspiring students in cancer research)/ },
       { id: "footer_email", label: "Email", regex: /(cureacademyinfo@gmail\.com)/ },
       { id: "footer_copy", label: "Copyright", regex: /(© \d{4} Cure Academy[^"<]+)/ },
+      { 
+        id: "footer_instagram", 
+        label: "Instagram URL", 
+        regex: /FOOTER_INSTAGRAM \*\/}<a href="(https:\/\/www\.instagram\.com\/[^"]+)"/ 
+      },
+      { 
+        id: "footer_instagram_handle", 
+        label: "Instagram handle", 
+        regex: /FOOTER_INSTAGRAM[\s\S]*?<span>(@[^<]+)<\/span>/ 
+      },
     ],
   },
 ];
@@ -218,8 +231,7 @@ function extractTimeline(source) {
   let m;
   while ((m = objRegex.exec(block))) {
     const get = (key) => {
-      // Match double-quoted OR backtick-quoted values
-      const r = new RegExp(`${key}:\\s*(?:"|\\`)([^"\`]*)(?:"|\\`)`);
+      const r = new RegExp(key + ':\\s*(?:"|`)([^"`]*)(?:"|`)');
       const found = m[1].match(r);
       return found ? found[1].trim() : "";
     };

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Microscope, Lightbulb, FlaskConical, Users, Mail, ArrowRight, Calendar, CheckCircle, MapPin, ExternalLink, Heart } from 'lucide-react'
+import { Microscope, Lightbulb, FlaskConical, Users, Mail, ArrowRight, Calendar, CheckCircle, MapPin, ExternalLink, Heart, Instagram } from 'lucide-react'
 import Admin from './admin.jsx'
 import lecturesFlyer from './assets/lecturesFlyer.jpg'
 
@@ -362,11 +362,15 @@ function Footer() {
   return (
     <footer className="bg-gray-50 border-t py-20 px-6 mt-20">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
-        <div className="text-center md:text-left">
-          <h3 className="font-bold text-xs text-gray-400 uppercase tracking-widest mb-3">Contact Us</h3>
+        <div className="text-center md:text-left flex flex-col gap-4">
+          <h3 className="font-bold text-xs text-gray-400 uppercase tracking-widest mb-1">Contact Us</h3>
           <a href="mailto:cureacademyinfo@gmail.com" className="flex items-center gap-2 text-teal-700 font-bold text-xl justify-center md:justify-start hover:underline">
             <Mail size={24} />
             <span>cureacademyinfo@gmail.com</span>
+          </a>
+          <a href="https://www.instagram.com/cure_academy/" target="_blank" className="flex items-center gap-2 text-teal-700 font-bold text-xl justify-center md:justify-start hover:underline">
+            <Instagram size={24} />
+            <span>@cure_academy</span>
           </a>
         </div>
         <div className="text-gray-400 text-sm font-medium">
