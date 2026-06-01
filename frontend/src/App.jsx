@@ -344,7 +344,7 @@ function SupportPage() {
           If you are interested in volunteering as a guest instructor or student mentor at Cure Academy, please complete the form below.
         </p>
         <a 
-          href="https://docs.google.com/forms/d/1JlUqATRrP_X65XRmuz0Py2xUjfjQ9U3RTeVGXEoEFlQ/viewform?edit_requested=true"
+          href="https://docs.google.com/forms/d/1UomkXZYqi5W4uZjUbbdXOpNF5R2RKDTbnFratq1BpxQ/"
           target="_blank"
           className="bg-teal-700 text-white px-12 py-5 rounded-full font-bold uppercase tracking-widest shadow-lg hover:bg-teal-800 transition-all inline-flex items-center gap-2"
         >
