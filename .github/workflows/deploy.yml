@@ -21,6 +21,8 @@ jobs:
 
       - run: npm run build
         working-directory: frontend
+        env:
+          VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
 
       - uses: peaceiris/actions-gh-pages@v3
         with:

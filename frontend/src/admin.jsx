@@ -80,24 +80,65 @@ function applyFields(source, values) {
     fields.forEach(({ id, regex }) => {
       const newVal = values[id];
       if (newVal === undefined) return;
-      // Replace only the first capture group with the new value
       result = result.replace(regex, (full, g1) => full.replace(g1, newVal));
     })
   );
   return result;
 }
 
+// Extract opportunities array from source
+function extractOpportunities(source) {
+  const match = source.match(/const opportunities = \[([\s\S]*?)\];/);
+  if (!match) return [];
+  const block = match[1].trim();
+  if (!block || block.replace(/\/\/.*$/gm, "").trim() === "") return [];
+  const results = [];
+  const entryRegex = /\{([^}]+)\}/g;
+  let m;
+  while ((m = entryRegex.exec(block)) !== null) {
+    const entry = m[1];
+    const get = (key) => {
+      const r = new RegExp(`${key}:\\s*"([^"]*)"`, );
+      const match = entry.match(r);
+      return match ? match[1] : "";
+    };
+    results.push({
+      title: get("title"),
+      org: get("org"),
+      description: get("description"),
+      link: get("link"),
+      tag: get("tag"),
+    });
+  }
+  return results;
+}
+
+// Replace opportunities array in source
+function applyOpportunities(source, opps) {
+  const entries = opps.map(o =>
+    `    { title: "${o.title}", org: "${o.org}", description: "${o.description}", link: "${o.link}", tag: "${o.tag}" }`
+  ).join(",\n");
+  const replacement = `const opportunities = [\n${entries}${entries ? ",\n  " : ""}\n  ]`;
+  return source.replace(/const opportunities = \[[\s\S]*?\]/, replacement);
+}
+
+const EMPTY_OPP = { title: "", org: "", description: "", link: "", tag: "" };
+const TAG_OPTIONS = ["Internship", "Program", "Event", "Fellowship", "Competition", "Other"];
+
 export default function Admin() {
-  const [authed,    setAuthed]    = useState(false);
-  const [pwInput,   setPwInput]   = useState("");
-  const [pwError,   setPwError]   = useState("");
-  const [token,     setToken]     = useState("");
-  const [activeTab, setActiveTab] = useState(0);
-  const [rawSource, setRawSource] = useState("");
-  const [fileSha,   setFileSha]   = useState("");
-  const [values,    setValues]    = useState({});
-  const [commitMsg, setCommitMsg] = useState("chore: update site content via admin panel");
-  const [status,    setStatus]    = useState({ type: "idle", msg: "Not connected — load file to begin" });
+  const [authed,       setAuthed]       = useState(false);
+  const [pwInput,      setPwInput]      = useState("");
+  const [pwError,      setPwError]      = useState("");
+  const [token,        setToken]        = useState("");
+  const [activeTab,    setActiveTab]    = useState(0);
+  const [rawSource,    setRawSource]    = useState("");
+  const [fileSha,      setFileSha]      = useState("");
+  const [values,       setValues]       = useState({});
+  const [opps,         setOpps]         = useState([]);
+  const [commitMsg,    setCommitMsg]    = useState("chore: update site content via admin panel");
+  const [status,       setStatus]       = useState({ type: "idle", msg: "Not connected — load file to begin" });
+
+  const ALL_TABS = [...FIELD_GROUPS.map(g => g.tab), "Opportunities"];
 
   // Auth
   const handleLogin = () => {
@@ -123,6 +164,7 @@ export default function Admin() {
       setRawSource(source);
       setFileSha(data.sha);
       setValues(extractFields(source));
+      setOpps(extractOpportunities(source));
       setStatus({ type: "ok", msg: `Loaded — ${FILE_PATH}` });
     } catch (e) {
       setStatus({ type: "err", msg: e.message });
@@ -133,7 +175,8 @@ export default function Admin() {
     if (!token || !rawSource) return;
     setStatus({ type: "load", msg: "Saving…" });
     try {
-      const updated = applyFields(rawSource, values);
+      let updated = applyFields(rawSource, values);
+      updated = applyOpportunities(updated, opps);
       const encoded = btoa(unescape(encodeURIComponent(updated)));
       const res = await fetch(
         `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,
@@ -158,9 +201,23 @@ export default function Admin() {
     } catch (e) {
       setStatus({ type: "err", msg: e.message });
     }
-  }, [token, rawSource, fileSha, values, commitMsg]);
+  }, [token, rawSource, fileSha, values, opps, commitMsg]);
 
   const set = (id, val) => setValues((prev) => ({ ...prev, [id]: val }));
+
+  // Opportunities helpers
+  const addOpp = () => setOpps(prev => [...prev, { ...EMPTY_OPP }]);
+  const removeOpp = (i) => setOpps(prev => prev.filter((_, idx) => idx !== i));
+  const updateOpp = (i, field, val) => setOpps(prev => prev.map((o, idx) => idx === i ? { ...o, [field]: val } : o));
+  const moveOpp = (i, dir) => {
+    setOpps(prev => {
+      const next = [...prev];
+      const swap = i + dir;
+      if (swap < 0 || swap >= next.length) return prev;
+      [next[i], next[swap]] = [next[swap], next[i]];
+      return next;
+    });
+  };
 
   if (!authed) {
     return (
@@ -184,9 +241,10 @@ export default function Admin() {
     );
   }
 
-  const group   = FIELD_GROUPS[activeTab];
+  const isOppsTab = activeTab === ALL_TABS.length - 1;
+  const group = !isOppsTab ? FIELD_GROUPS[activeTab] : null;
   const canSave = !!rawSource && !!token;
-  
+
   return (
     <div className="admin-root">
       {/* Topbar */}
@@ -213,21 +271,19 @@ export default function Admin() {
       <div className="admin-body">
         {/* Sidebar */}
         <div className="admin-sidebar">
-          {FIELD_GROUPS.map((g, i) => (
+          {ALL_TABS.map((tab, i) => (
             <button
-              key={g.tab}
+              key={tab}
               className={`admin-sidebar__tab${i === activeTab ? " admin-sidebar__tab--active" : ""}`}
               onClick={() => setActiveTab(i)}
             >
-              {g.tab}
+              {tab}
             </button>
           ))}
         </div>
 
         {/* Main */}
         <div className="admin-main">
-          <div className="admin-main__section-label">{group.tab}</div>
-
           {!rawSource ? (
             <p className="admin-main__empty">
               Enter your GitHub token above and click <strong>Load file</strong> to pull the live{" "}
@@ -239,26 +295,121 @@ export default function Admin() {
               </a>{" "}
               — enable the <code>repo</code> scope (or <code>contents: write</code> for fine-grained tokens).
             </p>
+          ) : isOppsTab ? (
+            /* ── OPPORTUNITIES TAB ── */
+            <div>
+              <div className="admin-main__section-label">Opportunities</div>
+              <p style={{ color: "#6b7280", fontSize: "0.85rem", marginBottom: "1.5rem" }}>
+                Add, edit, or remove opportunities. Click Save &amp; publish when done.
+              </p>
+
+              {opps.length === 0 && (
+                <p style={{ color: "#9ca3af", fontStyle: "italic", marginBottom: "1rem" }}>
+                  No opportunities yet. Click "Add Opportunity" to add one.
+                </p>
+              )}
+
+              {opps.map((opp, i) => (
+                <div key={i} style={{
+                  background: "#f9fafb",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "12px",
+                  padding: "1.25rem",
+                  marginBottom: "1rem",
+                }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+                    <span style={{ fontWeight: 700, color: "#374151" }}>Opportunity #{i + 1}</span>
+                    <div style={{ display: "flex", gap: "0.5rem" }}>
+                      <button onClick={() => moveOpp(i, -1)} disabled={i === 0}
+                        style={{ padding: "4px 10px", borderRadius: "6px", border: "1px solid #d1d5db", background: "white", cursor: "pointer", opacity: i === 0 ? 0.4 : 1 }}>↑</button>
+                      <button onClick={() => moveOpp(i, 1)} disabled={i === opps.length - 1}
+                        style={{ padding: "4px 10px", borderRadius: "6px", border: "1px solid #d1d5db", background: "white", cursor: "pointer", opacity: i === opps.length - 1 ? 0.4 : 1 }}>↓</button>
+                      <button onClick={() => removeOpp(i)}
+                        style={{ padding: "4px 12px", borderRadius: "6px", border: "1px solid #fca5a5", background: "#fff1f1", color: "#dc2626", cursor: "pointer", fontWeight: 600 }}>Remove</button>
+                    </div>
+                  </div>
+
+                  {[
+                    { field: "title", label: "Title" },
+                    { field: "org", label: "Organization" },
+                    { field: "description", label: "Description" },
+                    { field: "link", label: "Link (URL)" },
+                  ].map(({ field, label }) => (
+                    <div key={field} className="admin-field" style={{ marginBottom: "0.75rem" }}>
+                      <label className="admin-field__label">{label}</label>
+                      {field === "description" ? (
+                        <textarea
+                          rows={2}
+                          className="admin-field__textarea"
+                          value={opp[field]}
+                          onChange={(e) => updateOpp(i, field, e.target.value)}
+                        />
+                      ) : (
+                        <input
+                          className="admin-field__input"
+                          value={opp[field]}
+                          onChange={(e) => updateOpp(i, field, e.target.value)}
+                        />
+                      )}
+                    </div>
+                  ))}
+
+                  <div className="admin-field">
+                    <label className="admin-field__label">Tag</label>
+                    <select
+                      className="admin-field__input"
+                      value={opp.tag}
+                      onChange={(e) => updateOpp(i, "tag", e.target.value)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <option value="">Select a tag…</option>
+                      {TAG_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
+                    </select>
+                  </div>
+                </div>
+              ))}
+
+              <button
+                onClick={addOpp}
+                style={{
+                  marginTop: "0.5rem",
+                  padding: "0.75rem 1.5rem",
+                  background: "#0d9488",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "8px",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  fontSize: "0.9rem",
+                }}
+              >
+                + Add Opportunity
+              </button>
+            </div>
           ) : (
-            group.fields.map((f) => (
-              <div key={f.id} className="admin-field">
-                <label className="admin-field__label">{f.label}</label>
-                {f.textarea ? (
-                  <textarea
-                    rows={f.rows || 3}
-                    className="admin-field__textarea"
-                    value={values[f.id] || ""}
-                    onChange={(e) => set(f.id, e.target.value)}
-                  />
-                ) : (
-                  <input
-                    className="admin-field__input"
-                    value={values[f.id] || ""}
-                    onChange={(e) => set(f.id, e.target.value)}
-                  />
-                )}
-              </div>
-            ))
+            /* ── REGULAR FIELD TABS ── */
+            <>
+              <div className="admin-main__section-label">{group.tab}</div>
+              {group.fields.map((f) => (
+                <div key={f.id} className="admin-field">
+                  <label className="admin-field__label">{f.label}</label>
+                  {f.textarea ? (
+                    <textarea
+                      rows={f.rows || 3}
+                      className="admin-field__textarea"
+                      value={values[f.id] || ""}
+                      onChange={(e) => set(f.id, e.target.value)}
+                    />
+                  ) : (
+                    <input
+                      className="admin-field__input"
+                      value={values[f.id] || ""}
+                      onChange={(e) => set(f.id, e.target.value)}
+                    />
+                  )}
+                </div>
+              ))}
+            </>
           )}
         </div>
       </div>

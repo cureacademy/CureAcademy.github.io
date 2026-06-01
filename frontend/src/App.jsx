@@ -122,7 +122,7 @@ function HomePage({ setCurrentPage }) {
   )
 }
 
-function AboutPage() {
+function AboutPage({ setCurrentPage }) {
   return (
     <div className="pt-32 px-6 max-w-4xl mx-auto pb-20 text-left">
       <h2 className="text-3xl font-bold mb-4">About Us</h2>
@@ -155,11 +155,16 @@ function AboutPage() {
           </p>
           <p className="text-gray-700">
             <strong>Join our listserv:</strong>{' '}
-            <a href="#" onClick={(e) => { e.preventDefault(); document.getElementById('apply-listserv')?.scrollIntoView(); }} className="text-teal-600 underline">Sign up here</a>
+            <button
+              onClick={() => setCurrentPage('apply')}
+              className="text-teal-600 underline"
+            >
+              Sign up here
+            </button>
           </p>
           <p className="text-gray-700 mt-2">
             <strong>Follow us on Instagram:</strong>{' '}
-            <a href="https://instagram.com/cureacademy" target="_blank" className="text-teal-600 underline">@cureacademy</a>
+            <a href="https://instagram.com/cure_academy" target="_blank" className="text-teal-600 underline">@cureacademy</a>
           </p>
         </div>
       </div>
@@ -414,7 +419,7 @@ export default function App() {
   const renderPage = () => {
     switch(currentPage) {
       case 'home': return <HomePage setCurrentPage={setCurrentPage} />
-      case 'about': return <AboutPage />
+      case 'about': return <AboutPage setCurrentPage={setCurrentPage} />
       case 'program': return <ProgramPage />
       case 'apply': return <ApplyPage />
       case 'support': return <SupportPage />
