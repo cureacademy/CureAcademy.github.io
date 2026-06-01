@@ -45,7 +45,7 @@ function Navigation({ currentPage, setCurrentPage }) {
           className="md:hidden p-2 text-gray-600"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <span className="text-2xl">ÃÂÃÂ¢</span> : <span className="text-2xl">ÃÂÃÂ¢ÃÂÃÂ°</span>}
+          {mobileMenuOpen ? <span className="text-2xl">✕</span> : <span className="text-2xl">☰</span>}
         </button>
       </div>
 
@@ -179,9 +179,7 @@ const programTimeline = [
   { date: "June 29, 2026 at 5:00 PM ET", topic: "The Tumor Microenvironment", details: "Cancer associated fibroblasts, neighborhood cells, immune infiltration, and metastatic process." },
   { date: "July 10, 2026 at 5:00 PM ET", topic: "The Role of the Immune System in Cancer", details: "Immune cells, innate and adaptive immunity, how the immune system recognizes and fights cancer, mechanisms of immune evasion, and how immunotherapy helps the immune system target cancer cells." },
   { date: "July 14, 2026 at 4:30 PM ET", topic: "Understanding the Patient Experience", details: "Communication with patients and families, delivering a cancer diagnosis, treatment decision-making, access to care, financial barriers, and factors that influence cancer care outcomes." },
-  { date: "July 20-25, 2026", topic: "Environmental Impacts on Cancer", details: "**Cancer and the Environment**
-
-Environmental risk factors, cancer epidemiology, the interaction between genetics and environment, mechanisms of carcinogenesis, and the impact of environmental exposures on cancer risk across different populations and communities." }
+  { date: "July 20-25, 2026", topic: "Environmental Impacts on Cancer", details: "Environmental risk factors, cancer epidemiology, the interaction between genetics and environment, mechanisms of carcinogenesis, and the impact of environmental exposures on cancer risk across different populations and communities." }
 ];
 
 const phase2Schedule = [
@@ -372,7 +370,7 @@ function Footer() {
           </a>
         </div>
         <div className="text-gray-400 text-sm font-medium">
-          <p>ÃÂÃÂÃÂÃÂ© 2026 Cure Academy. All rights reserved.</p>
+          <p>© 2026 Cure Academy. All rights reserved.</p>
         </div>
       </div>
     </footer>

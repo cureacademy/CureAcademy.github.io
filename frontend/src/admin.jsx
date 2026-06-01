@@ -208,9 +208,7 @@ function applyOpportunities(source, opps) {
 const EMPTY_WEEK = { date: "", topic: "", details: "" };
 
 function extractTimeline(source) {
-  // Try top-level const first (new format)
   let match = source.match(/const programTimeline = \[([\s\S]*?)\];/);
-  // Fall back to inline const inside ProgramPage (old format)
   if (!match) match = source.match(/const timeline = \[([\s\S]*?)\]/);
   if (!match) return [];
 
@@ -220,13 +218,14 @@ function extractTimeline(source) {
   let m;
   while ((m = objRegex.exec(block))) {
     const get = (key) => {
-      const r = new RegExp(`${key}:\\s*"([^"]*)"`);
+      // Match double-quoted OR backtick-quoted values
+      const r = new RegExp(`${key}:\\s*(?:"|\\`)([^"\`]*)(?:"|\\`)`);
       const found = m[1].match(r);
-      return found ? found[1] : "";
+      return found ? found[1].trim() : "";
     };
     const date = get("date");
     if (date !== "" || get("topic") !== "") {
-      entries.push({ date: get("date"), topic: get("topic"), details: get("details") });
+      entries.push({ date, topic: get("topic"), details: get("details") });
     }
   }
   return entries;
@@ -345,7 +344,9 @@ export default function Admin() {
         }
       );
       const data = await res.json();
-      const source = atob(data.content.replace(/\n/g, ""));
+      const binary = atob(data.content.replace(/\n/g, ""));
+      const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+      const source = new TextDecoder().decode(bytes);
       setRawSource(source);
       setFileSha(data.sha);
       setValues(extractFields(source));
@@ -368,7 +369,9 @@ export default function Admin() {
       updated = applyTimeline(updated, timeline);
       updated = applyPhase2(updated, phase2);
 
-      const encoded = btoa(unescape(encodeURIComponent(updated)));
+      const bytes = new TextEncoder().encode(updated);
+      const binary = Array.from(bytes, (b) => String.fromCharCode(b)).join("");
+      const encoded = btoa(binary);
 
       await fetch(
         `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`,
