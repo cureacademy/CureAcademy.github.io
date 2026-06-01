@@ -193,3 +193,11 @@
   background: #e8e8e0;
   color: #0d0d0d;
 }
+
+.prog-section-header {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #888;
+  border-bottom: 1px solid #1e1e1e;
+  padding-bottom: 8px;
+}

@@ -44,7 +44,7 @@ function Navigation({ currentPage, setCurrentPage }) {
           className="md:hidden p-2 text-gray-600"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <span className="text-2xl">â</span> : <span className="text-2xl">â°</span>}
+          {mobileMenuOpen ? <span className="text-2xl">â</span> : <span className="text-2xl">â°</span>}
         </button>
       </div>
 
@@ -172,15 +172,21 @@ function AboutPage({ setCurrentPage }) {
   )
 }
 
-function ProgramPage() {
-  const timeline = [
-    { date: "June 22-26, 2026", topic: "Cancer Cell", details: "Process of transformation, DNA damage, mutations, oncogenes, tumor suppressors, and genomic instability." },
-    { date: "June 29-July 3, 2026", topic: "Tumor Microenvironment", details: "Cancer associated fibroblasts, neighborhood cells, immune infiltration, and metastatic process." },
-    { date: "July 6-10, 2026", topic: "The Immune System in Cancer", details: "Understanding the role of the immune system in cancer." },
-    { date: "July 13-17, 2026", topic: "The Role of the Host", details: "The patient as a whole." },
-    { date: "July 20-25, 2026", topic: "Environmental Impacts on Cancer", details: "Understanding environmental factor and its role in cancer." }
-  ]
+const programTimeline = [
+  { date: "June 22-26, 2026", topic: "Cancer Cell", details: "Process of transformation, DNA damage, mutations, oncogenes, tumor suppressors, and genomic instability." },
+  { date: "June 29-July 3, 2026", topic: "Tumor Microenvironment", details: "Cancer associated fibroblasts, neighborhood cells, immune infiltration, and metastatic process." },
+  { date: "July 6-10, 2026", topic: "The Immune System in Cancer", details: "Understanding the role of the immune system in cancer." },
+  { date: "July 13-17, 2026", topic: "The Role of the Host", details: "The patient as a whole." },
+  { date: "July 20-25, 2026", topic: "Environmental Impacts on Cancer", details: "Understanding environmental factor and its role in cancer." }
+];
 
+const phase2Schedule = [
+  { label: "Winter 2027", detail: "Application Opens" },
+  { label: "Spring 2027", detail: "Saturday sessions @ Columbia" },
+  { label: "Summer 2027", detail: "25 hrs/week for 6 weeks in lab" }
+];
+
+function ProgramPage() {
   return (
     <div className="pt-32 px-6 max-w-5xl mx-auto pb-24 text-left">
       <h2 className="text-4xl font-bold mb-4 tracking-tight">The Program</h2>
@@ -210,7 +216,7 @@ function ProgramPage() {
               <Calendar size={14} /> Timeline 2026
             </h4>
           </div>
-          {timeline.map((item, i) => (
+          {programTimeline.map((item, i) => (
             <div key={i} className="flex flex-col md:flex-row md:gap-10 border-b border-gray-50 last:border-0 pb-6 last:pb-0 text-left">
               <span className="font-bold text-teal-600 md:w-56 shrink-0">{item.date}</span>
               <div>
@@ -239,9 +245,9 @@ function ProgramPage() {
           <div className="bg-white/60 p-8 rounded-2xl">
             <h4 className="font-bold text-gray-800 mb-4 border-b pb-2 text-sm uppercase tracking-widest">Schedule</h4>
             <ul className="text-sm text-gray-600 space-y-2">
-              <li><strong>Winter 2027:</strong> Application Opens</li>
-              <li><strong>Spring 2027:</strong> Saturday sessions @ Columbia</li>
-              <li><strong>Summer 2027:</strong> 25 hrs/week for 6 weeks in lab</li>
+              {phase2Schedule.map((item, i) => (
+                <li key={i}><strong>{item.label}:</strong> {item.detail}</li>
+              ))}
             </ul>
           </div>
         </div>
@@ -301,7 +307,7 @@ function SubscribeForm() {
           disabled={status === 'loading' || status === 'success'}
           className="bg-[#F4A574] text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:brightness-105 transition-all disabled:opacity-60"
         >
-          {status === 'loading' ? 'Subscribing...' : status === 'success' ? 'â Subscribed' : 'Subscribe'}
+          {status === 'loading' ? 'Subscribing...' : status === 'success' ? 'â Subscribed' : 'Subscribe'}
         </button>
         {message && (
           <p className={`text-sm text-center font-medium ${status === 'success' ? 'text-teal-600' : 'text-red-500'}`}>
@@ -355,13 +361,13 @@ function SupportPage() {
   )
 }
 
-function OpportunitiesPage() {
-  const opportunities = [
-    // Add entries here as: { title, org, description, link, tag }
-    // Example:
-    // { title: "Summer Research Program", org: "Memorial Sloan Kettering", description: "8-week paid cancer research internship for rising seniors.", link: "https://mskcc.org", tag: "Internship" },
-  ]
+const opportunities = [
+  // Add entries here as: { title, org, description, link, tag }
+  // Example:
+  // { title: "Summer Research Program", org: "Memorial Sloan Kettering", description: "8-week paid cancer research internship for rising seniors.", link: "https://mskcc.org", tag: "Internship" },
+];
 
+function OpportunitiesPage() {
   return (
     <div className="pt-32 px-6 max-w-4xl mx-auto pb-20">
       <h2 className="text-3xl font-bold mb-3 text-gray-900">Other Opportunities</h2>
@@ -403,7 +409,7 @@ function Footer() {
           </a>
         </div>
         <div className="text-gray-400 text-sm font-medium">
-          <p>Â© 2026 Cure Academy. All rights reserved.</p>
+          <p>© 2026 Cure Academy. All rights reserved.</p>
         </div>
       </div>
     </footer>
