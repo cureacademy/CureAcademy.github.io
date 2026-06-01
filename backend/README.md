@@ -125,3 +125,5 @@ docker-compose down
 docker-compose build --no-cache
 docker-compose up
 ```
+
+npm install npm run also works
