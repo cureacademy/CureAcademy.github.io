@@ -45,7 +45,7 @@ function Navigation({ currentPage, setCurrentPage }) {
           className="md:hidden p-2 text-gray-600"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <span className="text-2xl">â</span> : <span className="text-2xl">â°</span>}
+          {mobileMenuOpen ? <span className="text-2xl">Ã¢</span> : <span className="text-2xl">Ã¢Â°</span>}
         </button>
       </div>
 
@@ -175,7 +175,7 @@ function AboutPage({ setCurrentPage }) {
 }
 
 const programTimeline = [
-  { date: "June 22-26, 2026", topic: "Cancer Cell", details: "Process of transformation, DNA damage, mutations, oncogenes, tumor suppressors, and genomic instability." },
+  { date: "June 22-25, 2026", topic: "Cancer Cell", details: "Process of transformation, DNA damage, mutations, oncogenes, tumor suppressors, and genomic instability." },
   { date: "June 29-July 3, 2026", topic: "Tumor Microenvironment", details: "Cancer associated fibroblasts, neighborhood cells, immune infiltration, and metastatic process." },
   { date: "July 6-10, 2026", topic: "The Immune System in Cancer", details: "Understanding the role of the immune system in cancer." },
   { date: "July 13-17, 2026", topic: "The Role of the Host", details: "The patient as a whole." },
@@ -324,9 +324,7 @@ function SupportPage() {
 }
 
 const opportunities = [
-  // Add entries here as: { title, org, description, link, tag }
-  // Example:
-  // { title: "Summer Research Program", org: "Memorial Sloan Kettering", description: "8-week paid cancer research internship for rising seniors.", link: "https://mskcc.org", tag: "Internship" },
+  { title: "Summer Research Program", org: "Memorial Sloan Kettering", description: "8-week paid cancer research internship for rising seniors.", link: "https://mskcc.org", tag: "Internship" }
 ];
 
 function OpportunitiesPage() {
@@ -371,7 +369,7 @@ function Footer() {
           </a>
         </div>
         <div className="text-gray-400 text-sm font-medium">
-          <p>Â© 2026 Cure Academy. All rights reserved.</p>
+          <p>ÃÂ© 2026 Cure Academy. All rights reserved.</p>
         </div>
       </div>
     </footer>
