@@ -44,7 +44,7 @@ function Navigation({ currentPage, setCurrentPage }) {
           className="md:hidden p-2 text-gray-600"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <span className="text-2xl">â</span> : <span className="text-2xl">â°</span>}
+          {mobileMenuOpen ? <span className="text-2xl">Ã¢</span> : <span className="text-2xl">Ã¢Â°</span>}
         </button>
       </div>
 
@@ -307,7 +307,7 @@ function SubscribeForm() {
           disabled={status === 'loading' || status === 'success'}
           className="bg-[#F4A574] text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:brightness-105 transition-all disabled:opacity-60"
         >
-          {status === 'loading' ? 'Subscribing...' : status === 'success' ? 'â Subscribed' : 'Subscribe'}
+          {status === 'loading' ? 'Subscribing...' : status === 'success' ? 'Ã¢ Subscribed' : 'Subscribe'}
         </button>
         {message && (
           <p className={`text-sm text-center font-medium ${status === 'success' ? 'text-teal-600' : 'text-red-500'}`}>
@@ -362,9 +362,7 @@ function SupportPage() {
 }
 
 const opportunities = [
-  // Add entries here as: { title, org, description, link, tag }
-  // Example:
-  // { title: "Summer Research Program", org: "Memorial Sloan Kettering", description: "8-week paid cancer research internship for rising seniors.", link: "https://mskcc.org", tag: "Internship" },
+  { title: "MCC & EIPM Summer Internship Program", org: "Weill Cornell Medicine", description: "This 7-week program will provide high school and college students with hands-on mentored experiential research experiences related to cancer and precision medicine with the goal to encourage the pursuit of STEM careers.", link: "https://meyercancer.weill.cornell.edu/education/mcc-eipm-summer-internship-program", tag: "Summer Research" }
 ];
 
 function OpportunitiesPage() {
@@ -409,7 +407,7 @@ function Footer() {
           </a>
         </div>
         <div className="text-gray-400 text-sm font-medium">
-          <p>© 2026 Cure Academy. All rights reserved.</p>
+          <p>Â© 2026 Cure Academy. All rights reserved.</p>
         </div>
       </div>
     </footer>
