@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Microscope, Lightbulb, FlaskConical, Users, Mail, ArrowRight, Calendar, CheckCircle, MapPin, ExternalLink, Heart } from 'lucide-react'
+import Admin from './admin.jsx'
 
 function Navigation({ currentPage, setCurrentPage }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false) 
@@ -406,7 +407,9 @@ function Footer() {
 }
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home')
+  const [currentPage, setCurrentPage] = useState(
+  window.location.hash === '#admin' ? 'admin' : 'home'
+)
   useEffect(() => { window.scrollTo(0, 0) }, [currentPage])
 
   const renderPage = () => {
@@ -417,6 +420,7 @@ export default function App() {
       case 'apply': return <ApplyPage />
       case 'support': return <SupportPage />
       case 'opportunities': return <OpportunitiesPage />
+      case 'admin': return <Admin />
       default: return <HomePage setCurrentPage={setCurrentPage} />
     }
   }
