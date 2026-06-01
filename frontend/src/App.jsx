@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Microscope, Lightbulb, FlaskConical, Users, Mail, ArrowRight, Calendar, CheckCircle, MapPin, ExternalLink, Heart } from 'lucide-react'
 import Admin from './admin.jsx'
+import lecturesFlyer from './assets/lecturesFlyer.jpg'
 
 function Navigation({ currentPage, setCurrentPage }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false) 
@@ -44,7 +45,7 @@ function Navigation({ currentPage, setCurrentPage }) {
           className="md:hidden p-2 text-gray-600"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <span className="text-2xl">Ã¢</span> : <span className="text-2xl">Ã¢Â°</span>}
+          {mobileMenuOpen ? <span className="text-2xl">â</span> : <span className="text-2xl">â°</span>}
         </button>
       </div>
 
@@ -82,6 +83,7 @@ function HomePage({ setCurrentPage }) {
             <div className="flex gap-4 justify-center">
               <a href="https://www.hypothekids.org/" target="_blank" className="px-4 py-2 bg-[#D4E157] font-bold border-2 border-black text-sm uppercase hover:shadow-md transition-shadow">HYPOTHEkids</a>
               <a href="https://www.hypothekids.org/nybioforce" target="_blank" className="px-4 py-2 bg-[#00BCD4] text-white font-bold border-2 border-black text-sm uppercase hover:shadow-md transition-shadow">NYbioforce</a>
+              <a href="https://www.citizensnyc.org/" target="_blank" className="px-4 py-2 bg-[#D4E157] font-bold border-2 border-black text-sm uppercase hover:shadow-md transition-shadow">CitizensNYC</a>
             </div>
           </div>
         </div>
@@ -228,6 +230,14 @@ function ProgramPage() {
         </div>
       </div>
 
+       <div className="w-[40rem] mx-auto mb-16">
+        <img
+          src={lecturesFlyer}
+          alt="Cure Academy Lecture Series Flyer"
+          className="w-full rounded-3xl shadow-md"
+        />
+      </div>
+
       <div className="p-12 bg-sky-50 rounded-[2.5rem] border border-sky-100 shadow-sm">
         <h3 className="text-2xl font-bold text-sky-900 mb-4 uppercase tracking-wider flex items-center gap-3">
           <CheckCircle className="text-sky-600" /> Phase 2: Research Internship with NY Bioforce (Summer 2027)
@@ -257,68 +267,20 @@ function ProgramPage() {
 }
 
 function SubscribeForm() {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState(null)
-  const [message, setMessage] = useState('')
-
-  const handleSubscribe = async () => {
-    if (!email || !email.includes('@')) {
-      setStatus('error')
-      setMessage('Please enter a valid email address.')
-      return
-    }
-    setStatus('loading')
-    try {
-      const res = await fetch('http://cureacademy.github.io/listserv/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      const data = await res.json()
-      if (res.ok) {
-        setStatus('success')
-        setMessage('You\'re subscribed! Welcome to the Cure Academy listserv.')
-        setEmail('')
-      } else {
-        setStatus('error')
-        setMessage(data.detail || 'Something went wrong. Please try again.')
-      }
-    } catch {
-      setStatus('error')
-      setMessage('Could not reach the server. Please try again later.')
-    }
-  }
-
   return (
     <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100">
-      <h3 className="text-xl font-bold mb-6 text-gray-800 text-center">Stay up to date</h3>
-      <div className="flex flex-col gap-4">
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSubscribe()}
-          disabled={status === 'loading' || status === 'success'}
-          className="p-4 rounded-2xl border-2 border-gray-200 focus:border-teal-400 outline-none text-center"
-        />
-        <button
-          onClick={handleSubscribe}
-          disabled={status === 'loading' || status === 'success'}
-          className="bg-[#F4A574] text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:brightness-105 transition-all disabled:opacity-60"
-        >
-          {status === 'loading' ? 'Subscribing...' : status === 'success' ? 'Ã¢ Subscribed' : 'Subscribe'}
-        </button>
-        {message && (
-          <p className={`text-sm text-center font-medium ${status === 'success' ? 'text-teal-600' : 'text-red-500'}`}>
-            {message}
-          </p>
-        )}
-      </div>
+      <h3 className="text-xl font-bold mb-3 text-gray-800 text-center">Stay up to date</h3>
+      <p className="text-gray-500 text-sm text-center mb-6">Join our listserv to get updates on lectures, opportunities, and events.</p>
+      <a
+        href="https://forms.gle/4ZDZFWYY6h4QRe226"
+        target="_blank"
+        className="block w-full bg-[#F4A574] text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:brightness-105 transition-all text-center"
+      >
+        Join the Listserv
+      </a>
     </div>
   )
 }
-
 function ApplyPage() {
   return (
     <div className="pt-32 px-6 max-w-3xl mx-auto text-center pb-24">
@@ -362,7 +324,9 @@ function SupportPage() {
 }
 
 const opportunities = [
-  { title: "MCC & EIPM Summer Internship Program", org: "Weill Cornell Medicine", description: "This 7-week program will provide high school and college students with hands-on mentored experiential research experiences related to cancer and precision medicine with the goal to encourage the pursuit of STEM careers.", link: "https://meyercancer.weill.cornell.edu/education/mcc-eipm-summer-internship-program", tag: "Summer Research" }
+  // Add entries here as: { title, org, description, link, tag }
+  // Example:
+  // { title: "Summer Research Program", org: "Memorial Sloan Kettering", description: "8-week paid cancer research internship for rising seniors.", link: "https://mskcc.org", tag: "Internship" },
 ];
 
 function OpportunitiesPage() {
