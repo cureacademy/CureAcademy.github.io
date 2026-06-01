@@ -175,7 +175,7 @@ function AboutPage({ setCurrentPage }) {
 }
 
 const programTimeline = [
-  { date: "June 22-25, 2026", topic: "Cancer Cell", details: "Process of transformation, DNA damage, mutations, oncogenes, tumor suppressors, and genomic instability." },
+  { date: "June 22-26, 2026", topic: "Cancer Cell", details: "Process of transformation, DNA damage, mutations, oncogenes, tumor suppressors, and genomic instability." },
   { date: "June 29-July 3, 2026", topic: "Tumor Microenvironment", details: "Cancer associated fibroblasts, neighborhood cells, immune infiltration, and metastatic process." },
   { date: "July 6-10, 2026", topic: "The Immune System in Cancer", details: "Understanding the role of the immune system in cancer." },
   { date: "July 13-17, 2026", topic: "The Role of the Host", details: "The patient as a whole." },
@@ -324,7 +324,7 @@ function SupportPage() {
 }
 
 const opportunities = [
-  { title: "Summer Research Program", org: "Memorial Sloan Kettering", description: "8-week paid cancer research internship for rising seniors.", link: "https://mskcc.org", tag: "Internship" }
+  { title: "MCC & EIPM Summer Internship Program", org: "Weill Cornell Medicine", description: "This 7-week program will provide high school and college students with hands-on mentored experiential research experiences related to cancer and precision medicine with the goal to encourage the pursuit of STEM careers.", link: "https://meyercancer.weill.cornell.edu/education/mcc-eipm-summer-internship-program", tag: "Summer Research" }
 ];
 
 function OpportunitiesPage() {
