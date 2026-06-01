@@ -177,20 +177,33 @@ const EMPTY_OPP = { title: "", org: "", description: "", link: "", tag: "" };
 function extractOpportunities(source) {
   const match = source.match(/const opportunities = \[([\s\S]*?)\];/);
   if (!match) return [];
+
   const block = match[1];
   const entries = [];
   const objRegex = /\{([\s\S]*?)\}/g;
+
   let m;
+
   while ((m = objRegex.exec(block))) {
     const get = (key) => {
-      const r = new RegExp(`${key}:\\s*"([^"]*)"`);
+      const r = new RegExp(
+        `${key}:\\s*"((?:\\\\.|[^"\\\\])*)"`
+      );
+
       const found = m[1].match(r);
-      return found ? found[1] : "";
+
+      if (!found) return "";
+
+      return found[1]
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, "\\");
     };
+
     const title = get("title");
-    if (title !== "" || get("org") !== "" || get("link") !== "") {
+
+    if (title || get("org") || get("link")) {
       entries.push({
-        title: get("title"),
+        title,
         org: get("org"),
         description: get("description"),
         link: get("link"),
@@ -198,6 +211,7 @@ function extractOpportunities(source) {
       });
     }
   }
+
   return entries;
 }
 
