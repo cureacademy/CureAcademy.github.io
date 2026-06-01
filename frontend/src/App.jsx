@@ -45,7 +45,7 @@ function Navigation({ currentPage, setCurrentPage }) {
           className="md:hidden p-2 text-gray-600"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <span className="text-2xl">Ã¢</span> : <span className="text-2xl">Ã¢Â°</span>}
+          {mobileMenuOpen ? <span className="text-2xl">ÃÂ¢</span> : <span className="text-2xl">ÃÂ¢ÃÂ°</span>}
         </button>
       </div>
 
@@ -324,7 +324,8 @@ function SupportPage() {
 }
 
 const opportunities = [
-  { title: "MCC & EIPM Summer Internship Program", org: "Weill Cornell Medicine", description: "This 7-week program will provide high school and college students with hands-on mentored experiential research experiences related to cancer and precision medicine with the goal to encourage the pursuit of STEM careers.", link: "https://meyercancer.weill.cornell.edu/education/mcc-eipm-summer-internship-program", tag: "Summer Research" }
+  { title: "MCC & EIPM Summer Internship Program", org: "Weill Cornell Medicine", description: "This 7-week program will provide high school and college students with hands-on mentored experiential research experiences related to cancer and precision medicine with the goal to encourage the pursuit of STEM careers.", link: "https://meyercancer.weill.cornell.edu/education/mcc-eipm-summer-internship-program", tag: "Summer Research" },
+  { title: "Volunteering", org: "Memorial Sloan Kettering Cancer Center", description: "Note that MSKCC offers volunteer opportunities in many different departments. Please scroll down on the linked website and review the \"Opportunities\" section under \"Current Contingent Roles\" to explore the various departments currently offering volunteer positions.", link: "https://careers.mskcc.org/volunteering/", tag: "Volunteering" }
 ];
 
 function OpportunitiesPage() {
@@ -369,7 +370,7 @@ function Footer() {
           </a>
         </div>
         <div className="text-gray-400 text-sm font-medium">
-          <p>ÃÂ© 2026 Cure Academy. All rights reserved.</p>
+          <p>ÃÂÃÂ© 2026 Cure Academy. All rights reserved.</p>
         </div>
       </div>
     </footer>
